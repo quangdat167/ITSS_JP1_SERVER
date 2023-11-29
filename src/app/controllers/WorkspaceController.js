@@ -107,11 +107,20 @@ class WorkspaceController {
                     },
                 },
                 {
+                    $lookup: {
+                        from: "projects",
+                        localField: "tasks.projectId",
+                        foreignField: "_id",
+                        as: "projects",
+                    },
+                },
+                {
                     $addFields: {
                         "tasks.firstName": "$usertask.firstName",
                         "tasks.lastName": "$usertask.lastName",
                         "tasks.role": "$usertasks.role",
                         "tasks.userId": "$usertasks.userId",
+                        "tasks.projectName": "$projects.name",
                     },
                 },
                 {
